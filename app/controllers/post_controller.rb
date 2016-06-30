@@ -4,21 +4,17 @@ class PostController < ApplicationController
 
   def new
     @twitter ||= MyTwitter.new
-    tag = "鳥貴族"
-    @twitter.tweet = @twitter.client.search("##{tag}", lang: "ja", result_type: 'recent', count: 20).map do |tweet|
-      create_from_twitter tweet
-
-       # {
-       #     icon: tweet.user.profile_image_url,
-       #     text: tweet.id,
-       #     data: tweet.user.created_at
-       # }
+    @twitter.tweet = @twitter.client.search('鳥貴族', lang: "ja", result_type: 'recent', count: 20).map do |tweet|
+       create_from_twitter tweet
     end
     @post = Post.all
     render action: 'index'
   end
 
   def create_from_twitter tweet
-    Post.create(text: tweet.text, image: tweet.user.profile_image_url)
+    str = tweet.user.created_at
+    format =  ['%Y:%m:%d %H:%M:%S']
+    d = DateTime.strptime(str, format)
+    Post.create(text: tweet.text, image: tweet.user.profile_image_url ,post_time: d, type: 'twitter' , key: tweet.id)
   end
 end
