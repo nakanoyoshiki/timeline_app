@@ -1,7 +1,6 @@
 class MyTwitter
   include ActiveModel::Model
-  attr_accessor :tag, :limit, :tweet
-  validates :tag, presence: true
+  attr_accessor :tweet
 
   def client
     @client ||= Twitter::REST::Client.new do |config|

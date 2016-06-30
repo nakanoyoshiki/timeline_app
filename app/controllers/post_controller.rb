@@ -1,13 +1,11 @@
 class PostController < ApplicationController
   def index
-    @twitter ||= Post.all
   end
 
-  def tweet
+  def new
     @twitter ||= MyTwitter.new
-    @twitter.tag = "鳥貴族"
-    @twitter.limit = "50"
-    @twitter.tweet = @twitter.client.search("##{@twitter.tag}", lang: "ja", result_type: 'recent', count: 20).map do |tweet|
+    tag = "鳥貴族"
+    @twitter.tweet = @twitter.client.search("##{tag}", lang: "ja", result_type: 'recent', count: 20).map do |tweet|
       create_from_twitter tweet
 
        # {
@@ -16,6 +14,7 @@ class PostController < ApplicationController
        #     data: tweet.user.created_at
        # }
     end
+    @post = Post.all
     render action: 'index'
   end
 
