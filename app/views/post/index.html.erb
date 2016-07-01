@@ -8,9 +8,10 @@
       </tr>
       </thead>
       <tbody>
+      <%= debug(@restaurant) %>
       <% @post.each do |tweet| %>
           <tr>
-            <td><%= tweet.post_time %></td>
+            <td><%= tweet.text %></td>
           </tr>
       <% end %>
       </tbody>

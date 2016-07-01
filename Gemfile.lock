@@ -167,6 +167,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   byebug
   coffee-rails (~> 4.1.0)
   jbuilder (~> 2.0)
