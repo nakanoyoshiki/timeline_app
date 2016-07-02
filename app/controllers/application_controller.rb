@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
 
   def user_favorite post
-    Favorite.where(user_id: cookies[:user_id]).where(post: post.id).first
+    Favorite.where(user_id: cookies[:user_id]).where(post_id: post.id).first
   end
 
   def user_favorites
