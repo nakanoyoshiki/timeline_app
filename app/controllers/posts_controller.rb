@@ -1,4 +1,4 @@
-class PostController < ApplicationController
+class PostsController < ApplicationController
   def index
     @post = Post.order('key asc').limit(100)
   end
@@ -37,7 +37,7 @@ class PostController < ApplicationController
 
   def create_from_gnavi
     key = 'e9c5ed396a549bfdf2bb6fe8c3cc0d3d'
-    @restaurant_url ||= "http://api.gnavi.co.jp/PhotoSearchAPI/20150630/?keyid=#{key}&format=json&comment=おいしい&sort=1&hit_per_page=10"
+    @restaurant_url ||= "http://api.gnavi.co.jp/PhotoSearchAPI/20150630/?keyid=#{key}&format=json&comment=京都&sort=1&hit_per_page=10"
     @restaurant = JSON.parse(Net::HTTP.get(URI.parse(URI.escape(@restaurant_url))))
     @gnavi = @restaurant['response']
     @gnavi.delete('@attributes')

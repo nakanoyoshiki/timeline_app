@@ -29,5 +29,4 @@ ActiveRecord::Schema.define(version: 20160702100620) do
     t.string   "key"
     t.string   "api_type"
   end
-
 end

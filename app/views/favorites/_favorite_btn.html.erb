@@ -1,0 +1,5 @@
+<% if user_favorites.pluck(:post_id).include? post.id %>
+    <%= render 'favorites/destroy', post: post %>
+<% else %>
+    <%= render 'favorites/create', post: post %>
+<% end %>
