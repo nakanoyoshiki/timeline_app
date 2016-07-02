@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @post = Post.order('key asc').limit(100)
+    @post = Post.where(api_type: "gnavi").order('post_time desc').limit(100)
   end
 
   def update
@@ -10,7 +10,7 @@ class PostsController < ApplicationController
 
     # @twitter ||= MyTwitter.new
     # @updatetweet = @twitter.client.search('居酒屋', lang: "ja", result_type: 'recent', count: 20).map do |tweet|
-    #     create_from_twitter tweet
+    #     #create_from_twitter tweet
     # end
     #
     # respond_to do |format|
@@ -26,18 +26,17 @@ class PostsController < ApplicationController
   end
 
   def create_from_twitter tweet
-    # str = tweet.user.created_at
-    # format =  ['%Y:%m:%d %H:%M:%S']
-    # d = DateTime.strptime(str, format)
+    str = tweet.user.created_at.to_s
+    time = Time.parse(str)
     @key_check = Post.where(key: tweet.id, api_type: "twitter" )
     if @key_check.blank?
-      Post.create(text: tweet.text, image: tweet.user.profile_image_url , api_type: 'twitter' , key: tweet.id)
+      Post.create(text: tweet.text,  api_type: 'twitter', key: tweet.id,image: tweet.user.profile_image_url  ,post_time: time)
     end
   end
 
   def create_from_gnavi
     key = 'e9c5ed396a549bfdf2bb6fe8c3cc0d3d'
-    @restaurant_url ||= "http://api.gnavi.co.jp/PhotoSearchAPI/20150630/?keyid=#{key}&format=json&comment=京都&sort=1&hit_per_page=10"
+    @restaurant_url ||= "http://api.gnavi.co.jp/PhotoSearchAPI/20150630/?keyid=#{key}&format=json&shop_name=鳥貴族&sort=1&hit_per_page=10"
     @restaurant = JSON.parse(Net::HTTP.get(URI.parse(URI.escape(@restaurant_url))))
     @gnavi = @restaurant['response']
     @gnavi.delete('@attributes')
@@ -45,7 +44,7 @@ class PostsController < ApplicationController
     @gnavi.delete('hit_per_page')
     @key_check = Post.where(key: @gnavi['0']['photo']['vote_id'], api_type: 'gnavi' )
     if @key_check.blank?
-      @ans =  Post.create(text: @gnavi['0']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['0']['photo']['vote_id'], image: @gnavi['0']['photo']['image_url']['url_320'])
+      @ans =  Post.create(text: @gnavi['0']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['0']['photo']['vote_id'], image: @gnavi['0']['photo']['image_url']['url_320'], post_time: @gnavi['0']['photo']['update_date'])
     end
     @key_check = Post.where(key: @gnavi['1']['photo']['vote_id'], api_type: 'gnavi' )
     if @key_check.blank?
