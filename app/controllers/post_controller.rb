@@ -9,7 +9,7 @@ class PostController < ApplicationController
 
 
     # @twitter ||= MyTwitter.new
-    # @updatetweet = @twitter.client.search('鳥貴族', lang: "ja", result_type: 'recent', count: 20).map do |tweet|
+    # @updatetweet = @twitter.client.search('居酒屋', lang: "ja", result_type: 'recent', count: 20).map do |tweet|
     #     create_from_twitter tweet
     # end
     #
@@ -19,10 +19,10 @@ class PostController < ApplicationController
     #   end
     # end
 
-    rescue => e
-       logger.error e.message
-       flash[:error] = "エラーが起きました[#{e.message}]"
-       redirect_to root_path
+  #   rescue => e
+  #      logger.error e.message
+  #      flash[:error] = "エラーが起きました[#{e.message}]"
+  #      redirect_to root_path
   end
 
   def create_from_twitter tweet
@@ -37,7 +37,7 @@ class PostController < ApplicationController
 
   def create_from_gnavi
     key = 'e9c5ed396a549bfdf2bb6fe8c3cc0d3d'
-    @restaurant_url ||= "http://api.gnavi.co.jp/PhotoSearchAPI/20150630/?keyid=#{key}&format=json&shop_name=鳥貴族&sort=1&hit_per_page=10"
+    @restaurant_url ||= "http://api.gnavi.co.jp/PhotoSearchAPI/20150630/?keyid=#{key}&format=json&comment=おいしい&sort=1&hit_per_page=10"
     @restaurant = JSON.parse(Net::HTTP.get(URI.parse(URI.escape(@restaurant_url))))
     @gnavi = @restaurant['response']
     @gnavi.delete('@attributes')

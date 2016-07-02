@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root :to => 'post#index'
   get 'post/update' => "post#update", as: :update_post
+
+  resources :favorites, only: %w(index create destroy)
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

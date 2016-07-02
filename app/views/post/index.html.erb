@@ -14,6 +14,12 @@
             <td><img src="<%= tweet[:image] %>" alt="icon"></td>
             <td><%= tweet.text %></td>
             <td><%= tweet.post_time %></td>
+            <td><%= tweet.key %></td>
+            <td>
+              <span id="tweet_<%= tweet.id %>">
+                <%= render 'favorite/favorite_btn', post: tweet %>
+              </span>
+            </td>
           </tr>
       <% end %>
 
