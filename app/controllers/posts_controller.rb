@@ -7,10 +7,10 @@ class PostsController < ApplicationController
     create_from_gnavi
 
 
-    # @twitter ||= MyTwitter.new
-    # @twitter.client.search('鳥貴族', lang: "ja", result_type: 'recent', count: 2).map do |tweet|
-    #   create_from_twitter tweet
-    # end
+    @twitter ||= MyTwitter.new
+    @twitter.client.search('鳥貴族', lang: "ja", result_type: 'recent',count: 20).each do |tweet|
+       create_from_twitter tweet
+    end
     # #
     # # respond_to do |format|
     #   if @updatetweet.save
@@ -29,7 +29,7 @@ class PostsController < ApplicationController
     time = Time.parse(str)
     @key_check = Post.where(key: tweet.id, api_type: "twitter" )
     if @key_check.blank?
-      Post.create(text: tweet.text,  api_type: 'twitter', key: tweet.id,image: tweet.user.profile_image_url  ,post_time: time)
+      Post.create(text: tweet.text,  api_type: 'twitter', key: tweet.id,image: tweet.user.profile_image_url_https  ,post_time: time)
     end
   end
 

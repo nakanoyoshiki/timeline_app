@@ -1,7 +1,7 @@
 class FavoritesController < ApplicationController
   def index
     id = Favorite.select(:post_id)
-    @post = Post.where(id: id)
+    @posts = Post.where(id: id)
   end
   def create
     if cookies[:user_id].blank?
