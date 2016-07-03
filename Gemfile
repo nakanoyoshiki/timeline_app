@@ -48,3 +48,5 @@ end
 gem 'twitter'
 
 gem 'addressable', require: 'addressable/uri'
+
+gem 'rails_autolink'

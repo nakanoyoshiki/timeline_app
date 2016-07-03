@@ -12,7 +12,7 @@
       <% @post.each do |tweet| %>
           <tr>
             <td><img src="<%= tweet[:image] %>" alt="icon"></td>
-            <td><%= tweet.text %></td>
+            <td><%= auto_link(simple_format(tweet[:text]), :html => { :target => "_blank" })%></td>
             <td><%= tweet.post_time %></td>
             <td><%= tweet.key %></td>
             <td>

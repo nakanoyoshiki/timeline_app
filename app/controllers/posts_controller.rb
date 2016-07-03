@@ -1,17 +1,16 @@
 class PostsController < ApplicationController
   def index
-    @post = Post.where(api_type: "gnavi").order('post_time desc').limit(100)
+    @post = Post.where(api_type: "twitter").order('post_time asc').limit(100)
   end
 
   def update
-
     create_from_gnavi
 
 
-    # @twitter ||= MyTwitter.new
-    # @updatetweet = @twitter.client.search('居酒屋', lang: "ja", result_type: 'recent', count: 20).map do |tweet|
-    #     #create_from_twitter tweet
-    # end
+    @twitter ||= MyTwitter.new
+    @twitter.client.search('酔虎伝', lang: "ja", result_type: 'recent', count: 2).map do |tweet|
+      create_from_twitter tweet
+    end
     #
     # respond_to do |format|
     #   if @updatetweet.save

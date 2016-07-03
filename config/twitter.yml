@@ -1,0 +1,11 @@
+development: &default
+  consumer_key: DVflD2nAIY5SXfr9mtWKXWr8c
+  consumer_secret: McLiKtby5Ng0LsZ8hSW1Ix3SrQ2KqleQ4OLa4fgPaEfUZq13U0
+  access_token: 495527233-BLgpO98SCn7DOgSF6xZwWB7fhRZUxjhfG8uOX3MK
+  access_token_secret: OQgahTY1c0tvgvyGBfy8IY3CWFu3Dfp14NtnyspWRqsCX
+
+test:
+  <<: *default
+
+production:
+  <<: *default
