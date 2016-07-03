@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   def index
+    create_from_gnavi
     @posts = Post.order('post_time desc').limit(100)
   end
 
@@ -41,47 +42,17 @@ class PostsController < ApplicationController
     @gnavi.delete('@attributes')
     @gnavi.delete('total_hit_count')
     @gnavi.delete('hit_per_page')
-    # (1..10).each do |num|
-    #   Post.create(
-    #        test2: @gnavi[num],
-    #        test1: @gnavi[num]['photo'],
-    #        text: @gnavi[num]['photo']['comment'],
-    #        api_type: 'gnavi' ,
-    #        key: @gnavi[num]['photo']['vote_id'],
-    #        image: @gnavi[num]['photo']['image_url']['url_320'],
-    #        post_time: @gnavi[num]['photo']['update_date']
-    #   )
-    # end
-
-    @key_check = Post.where(key: @gnavi['0']['photo']['vote_id'], api_type: 'gnavi' )
-    if @key_check.blank?
-      Post.create(text: @gnavi['0']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['0']['photo']['vote_id'], image: @gnavi['0']['photo']['image_url']['url_320'], post_time: @gnavi['0']['photo']['update_date'])
+    @nums = ['\'0\'','\'1\'','\'2\'','\'3\'','\'4\'','\'5\'','\'6\'','\'7\'','\'8\'','\'9\'','\'9\'',]
+    (0..9).each do |i|
+      @num = @nums[i]
+      @key_check = Post.where(key: @gnavi[@num[1]]['photo']['vote_id'], api_type: "gnavi" )
+      if @key_check.blank?
+        Post.create(text: @gnavi[@num[1]]['photo']['comment'],
+                    api_type: 'gnavi' ,
+                    key: @gnavi[@num[1]]['photo']['vote_id'],
+                    image: @gnavi[@num[1]]['photo']['image_url']['url_320'],
+                    post_time: @gnavi[@num[1]]['photo']['update_date'])
+      end
     end
-    @key_check = Post.where(key: @gnavi['1']['photo']['vote_id'], api_type: 'gnavi' )
-    if @key_check.blank?
-      Post.create(text: @gnavi['1']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['1']['photo']['vote_id'], image: @gnavi['1']['photo']['image_url']['url_320'], post_time: @gnavi['1']['photo']['update_date'])
-    end
-    @key_check = Post.where(key: @gnavi['2']['photo']['vote_id'], api_type: 'gnavi' )
-    if @key_check.blank?
-      Post.create(text: @gnavi['2']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['2']['photo']['vote_id'], image: @gnavi['2']['photo']['image_url']['url_320'], post_time: @gnavi['2']['photo']['update_date'])
-    end
-    @key_check = Post.where(key: @gnavi['3']['photo']['vote_id'], api_type: 'gnavi' )
-    if @key_check.blank?
-      Post.create(text: @gnavi['3']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['3']['photo']['vote_id'], image: @gnavi['3']['photo']['image_url']['url_320'], post_time: @gnavi['3']['photo']['update_date'])
-    end
-    @key_check = Post.where(key: @gnavi['4']['photo']['vote_id'], api_type: 'gnavi' )
-    if @key_check.blank?
-      Post.create(text: @gnavi['4']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['4']['photo']['vote_id'], image: @gnavi['4']['photo']['image_url']['url_320'], post_time: @gnavi['4']['photo']['update_date'])
-    end
-    @key_check = Post.where(key: @gnavi['5']['photo']['vote_id'], api_type: 'gnavi' )
-    if @key_check.blank?
-      Post.create(text: @gnavi['5']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['5']['photo']['vote_id'], image: @gnavi['5']['photo']['image_url']['url_320'], post_time: @gnavi['5']['photo']['update_date'])
-    end
-    @key_check = Post.where(key: @gnavi['6']['photo']['vote_id'], api_type: 'gnavi' )
-    if @key_check.blank?
-      Post.create(text: @gnavi['6']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['6']['photo']['vote_id'], image: @gnavi['6']['photo']['image_url']['url_320'], post_time: @gnavi['6']['photo']['update_date'])
-    end
-
-    redirect_to root_path
   end
 end
