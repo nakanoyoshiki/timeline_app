@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @post = Post.where(api_type: "twitter").order('post_time asc').limit(100)
+    @post = Post.order('post_time desc').limit(100)
   end
 
   def update
@@ -8,7 +8,7 @@ class PostsController < ApplicationController
 
 
     @twitter ||= MyTwitter.new
-    @twitter.client.search('酔虎伝', lang: "ja", result_type: 'recent', count: 2).map do |tweet|
+    @twitter.client.search('鳥貴族', lang: "ja", result_type: 'recent', count: 2).map do |tweet|
       create_from_twitter tweet
     end
     #
@@ -35,7 +35,7 @@ class PostsController < ApplicationController
 
   def create_from_gnavi
     key = 'e9c5ed396a549bfdf2bb6fe8c3cc0d3d'
-    @restaurant_url ||= "http://api.gnavi.co.jp/PhotoSearchAPI/20150630/?keyid=#{key}&format=json&shop_name=鳥貴族&sort=1&hit_per_page=10"
+    @restaurant_url ||= "http://api.gnavi.co.jp/PhotoSearchAPI/20150630/?keyid=#{key}&format=json&comment=美味しい&sort=1&hit_per_page=10"
     @restaurant = JSON.parse(Net::HTTP.get(URI.parse(URI.escape(@restaurant_url))))
     @gnavi = @restaurant['response']
     @gnavi.delete('@attributes')
@@ -47,27 +47,27 @@ class PostsController < ApplicationController
     end
     @key_check = Post.where(key: @gnavi['1']['photo']['vote_id'], api_type: 'gnavi' )
     if @key_check.blank?
-      @ans =  Post.create(text: @gnavi['1']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['1']['photo']['vote_id'], image: @gnavi['1']['photo']['image_url']['url_320'])
+      @ans =  Post.create(text: @gnavi['1']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['1']['photo']['vote_id'], image: @gnavi['1']['photo']['image_url']['url_320'], post_time: @gnavi['1']['photo']['update_date'])
     end
     @key_check = Post.where(key: @gnavi['2']['photo']['vote_id'], api_type: 'gnavi' )
     if @key_check.blank?
-      @ans =  Post.create(text: @gnavi['2']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['2']['photo']['vote_id'], image: @gnavi['2']['photo']['image_url']['url_320'])
+      @ans =  Post.create(text: @gnavi['2']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['2']['photo']['vote_id'], image: @gnavi['2']['photo']['image_url']['url_320'], post_time: @gnavi['2']['photo']['update_date'])
     end
     @key_check = Post.where(key: @gnavi['3']['photo']['vote_id'], api_type: 'gnavi' )
     if @key_check.blank?
-      @ans =  Post.create(text: @gnavi['3']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['3']['photo']['vote_id'], image: @gnavi['3']['photo']['image_url']['url_320'])
+      @ans =  Post.create(text: @gnavi['3']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['3']['photo']['vote_id'], image: @gnavi['3']['photo']['image_url']['url_320'], post_time: @gnavi['3']['photo']['update_date'])
     end
     @key_check = Post.where(key: @gnavi['4']['photo']['vote_id'], api_type: 'gnavi' )
     if @key_check.blank?
-      @ans =  Post.create(text: @gnavi['4']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['4']['photo']['vote_id'], image: @gnavi['4']['photo']['image_url']['url_320'])
+      @ans =  Post.create(text: @gnavi['4']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['4']['photo']['vote_id'], image: @gnavi['4']['photo']['image_url']['url_320'], post_time: @gnavi['4']['photo']['update_date'])
     end
     @key_check = Post.where(key: @gnavi['5']['photo']['vote_id'], api_type: 'gnavi' )
     if @key_check.blank?
-      @ans =  Post.create(text: @gnavi['5']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['5']['photo']['vote_id'], image: @gnavi['5']['photo']['image_url']['url_320'])
+      @ans =  Post.create(text: @gnavi['5']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['5']['photo']['vote_id'], image: @gnavi['5']['photo']['image_url']['url_320'], post_time: @gnavi['5']['photo']['update_date'])
     end
     @key_check = Post.where(key: @gnavi['6']['photo']['vote_id'], api_type: 'gnavi' )
     if @key_check.blank?
-      @ans =  Post.create(text: @gnavi['6']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['6']['photo']['vote_id'], image: @gnavi['6']['photo']['image_url']['url_320'])
+      @ans =  Post.create(text: @gnavi['6']['photo']['comment'], api_type: 'gnavi' , key: @gnavi['6']['photo']['vote_id'], image: @gnavi['6']['photo']['image_url']['url_320'], post_time: @gnavi['6']['photo']['update_date'])
     end
 
     redirect_to root_path

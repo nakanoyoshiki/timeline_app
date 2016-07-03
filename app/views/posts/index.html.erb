@@ -13,8 +13,12 @@
           <tr>
             <td><img src="<%= tweet[:image] %>" alt="icon"></td>
             <td><%= auto_link(simple_format(tweet[:text]), :html => { :target => "_blank" })%></td>
-            <td><%= tweet.post_time %></td>
-            <td><%= tweet.key %></td>
+            <% if tweet.api_type == "twitter" %>
+              <td><%= tweet.post_time.strftime("%Y年%m月%d日 %H時%M分")%></td>
+            <% end %>
+            <% if tweet.api_type == "gnavi" %>
+                <td><%= tweet.post_time%></td>
+            <% end %>
             <td>
               <span id="tweet_<%= tweet.id %>">
                 <%= render 'favorites/favorite_btn', post: tweet %>
