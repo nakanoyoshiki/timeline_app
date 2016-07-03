@@ -50,3 +50,8 @@ gem 'twitter'
 gem 'addressable', require: 'addressable/uri'
 
 gem 'rails_autolink'
+
+gem 'simple_form'
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'

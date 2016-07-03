@@ -1,0 +1,16 @@
+<%= simple_form_for @post, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :text %>
+  <%= error_span(@post[:text]) %>
+  <%= f.input :image %>
+  <%= error_span(@post[:image]) %>
+  <%= f.input :post_time %>
+  <%= error_span(@post[:post_time]) %>
+  <%= f.input :key %>
+  <%= error_span(@post[:key]) %>
+  <%= f.input :api_type %>
+  <%= error_span(@post[:api_type]) %>
+
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                posts_path, :class => 'btn btn-default' %>
+<% end %>

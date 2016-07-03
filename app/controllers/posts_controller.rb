@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @post = Post.order('post_time desc').limit(100)
+    @posts = Post.order('post_time desc').limit(100)
   end
 
   def update
