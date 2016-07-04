@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    #create_from_gnavi
+    create_from_gnavi
     @posts = Post.order('post_time desc').limit(100)
   end
 
@@ -9,20 +9,18 @@ class PostsController < ApplicationController
 
 
     @twitter ||= MyTwitter.new
-    @twitter.client.search('鳥貴族', lang: "ja", result_type: 'recent',count: 20).each do |tweet|
+    @twitter.client.search('鳥貴族', lang: "ja", result_type: 'recent',count: 10).each do |tweet|
        create_from_twitter tweet
     end
-    # #
-    # # respond_to do |format|
-    #   if @updatetweet.save
-    #     format.html { render action: "index", notice: 'Timeline was successfully updated.' }
-    #   end
-    # end
-
-  #   rescue => e
-  #      logger.error e.message
-  #      flash[:error] = "エラーが起きました[#{e.message}]"
-  #      redirect_to root_path
+    respond_to do |format|
+      if @updatetweet.save
+        format.html { redirect_to root_path, notice: 'Timeline was successfully updated.' }
+      end
+    end
+    rescue => e
+    logger.error e.message
+    flash[:error] = "エラーが起きました[#{e.message}]"
+    redirect_to root_path
   end
 
   def create_from_twitter tweet
@@ -39,9 +37,6 @@ class PostsController < ApplicationController
     @restaurant_url ||= "http://api.gnavi.co.jp/PhotoSearchAPI/20150630/?keyid=#{key}&format=json&comment=美味しい&sort=1&hit_per_page=10"
     @restaurant = JSON.parse(Net::HTTP.get(URI.parse(URI.escape(@restaurant_url))))
     @gnavi = @restaurant['response']
-    @gnavi.delete('@attributes')
-    @gnavi.delete('total_hit_count')
-    @gnavi.delete('hit_per_page')
     @nums = ['\'0\'','\'1\'','\'2\'','\'3\'','\'4\'','\'5\'','\'6\'','\'7\'','\'8\'','\'9\'','\'9\'',]
     (0..9).each do |i|
       @num = @nums[i]
