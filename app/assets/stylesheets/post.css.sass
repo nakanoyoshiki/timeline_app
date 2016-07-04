@@ -1,15 +1,8 @@
 $background-color: #f0f0e5
-$border-color: #DED6A6
-$font-color-medium: #DA8D42
-
-$color-restaurant: #E1B46E
-$color-esthetic: #D75281
-$color-shop: #34C5CF
-$font-color-restaurant: #DA8D42
-$font-color-esthetic: #D75281
-$font-color-shop: #34C5CF
 $max-width: 480px
 
+body
+  background-color: #fafafa
 .container
   max-width: $max-width
   margin: 0 auto
@@ -17,11 +10,15 @@ $max-width: 480px
   .timeline-cell
     margin: 0 0 10px 0
     background-color: $background-color
-.post-image
-  img
-    width: 20%
-    display: block
-    margin: 0 auto
+  .post-image
+    img
+      width: 40%
+      display: block
+      margin: 0 auto
+  .post-text
+    padding: 1% 4%
+  .post-time
+    padding: 0 1% 0 0
 @media screen and ($max-width)
   .container
     width: 100%

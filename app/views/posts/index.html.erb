@@ -6,12 +6,13 @@
               <%= image_tag post.image %>
           </th>
         </div>
-        <div><th><%= auto_link(simple_format(post.text)) %></th></div>
+        <div class="post-text"><th><%= auto_link(simple_format(post.text)) %></th></div>
         <th>
-          <%= post.post_time.strftime("%Y年%m月%d日 %H時%M分") %>
           <span id="tweet_<%= post.id %>">
             <%= render 'favorites/favorite_btn', post: post %>
           </span>
+          <div class="post-time pull-right"><%= post.post_time.strftime("%Y年%m月%d日 %H時%M分") %></div>
+
         </th>
       </div>
   <% end %>
