@@ -1,21 +1,18 @@
 class PostsController < ApplicationController
   def index
-    create_from_gnavi
     @posts = Post.order('post_time desc').limit(100)
   end
 
   def update
     create_from_gnavi
 
-
     @twitter ||= MyTwitter.new
-    @twitter.client.search('鳥貴族', lang: "ja", result_type: 'recent',count: 10).each do |tweet|
-       create_from_twitter tweet
+    @twitter.client.search('鳥貴族', lang: "ja", result_type: 'recent',count: 20).each do |tweet|
+      create_from_twitter tweet
     end
+
     respond_to do |format|
-      if @updatetweet.save
-        format.html { redirect_to root_path, notice: 'Timeline was successfully updated.' }
-      end
+      format.html { redirect_to root_path, notice: 'Timeline was successfully updated.' }
     end
     rescue => e
     logger.error e.message
@@ -34,10 +31,10 @@ class PostsController < ApplicationController
 
   def create_from_gnavi
     key = 'e9c5ed396a549bfdf2bb6fe8c3cc0d3d'
-    @restaurant_url ||= "http://api.gnavi.co.jp/PhotoSearchAPI/20150630/?keyid=#{key}&format=json&comment=美味しい&sort=1&hit_per_page=10"
-    @restaurant = JSON.parse(Net::HTTP.get(URI.parse(URI.escape(@restaurant_url))))
-    @gnavi = @restaurant['response']
-    @nums = ['\'0\'','\'1\'','\'2\'','\'3\'','\'4\'','\'5\'','\'6\'','\'7\'','\'8\'','\'9\'','\'9\'',]
+    @search_url ||= "http://api.gnavi.co.jp/PhotoSearchAPI/20150630/?keyid=#{key}&format=json&comment=美味しい&sort=1&hit_per_page=10"
+    @response = JSON.parse(Net::HTTP.get(URI.parse(URI.escape(@search_url))))
+    @gnavi = @response['response']
+    @nums = ['\'0\'','\'1\'','\'2\'','\'3\'','\'4\'','\'5\'','\'6\'','\'7\'','\'8\'','\'9\'']
     (0..9).each do |i|
       @num = @nums[i]
       @key_check = Post.where(key: @gnavi[@num[1]]['photo']['vote_id'], api_type: "gnavi" )

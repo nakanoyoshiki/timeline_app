@@ -1,20 +1,43 @@
 <article id="timeline" class="">
   <% @posts.each do |post| %>
-      <div class="timeline-cell">
-        <div class="post-image">
+      <% if post.api_type == 'gnavi' %>
+        <div class="timeline-gnavi">
+          <div class="post-image">
+            <th>
+                <%= image_tag post.image %>
+            </th>
+          </div>
+          <div class="post-text"><th><%= auto_link(simple_format(post.text)) %></th></div>
           <th>
-              <%= image_tag post.image %>
+            <span id="tweet_<%= post.id %>">
+              <%= render 'favorites/favorite_btn', post: post %>
+            </span>
+            <div class="post-time pull-right"><%= post.post_time.strftime("%Y年%m月%d日 %H時%M分") %></div>
+
           </th>
         </div>
-        <div class="post-text"><th><%= auto_link(simple_format(post.text)) %></th></div>
-        <th>
-          <span id="tweet_<%= post.id %>">
-            <%= render 'favorites/favorite_btn', post: post %>
-          </span>
-          <div class="post-time pull-right"><%= post.post_time.strftime("%Y年%m月%d日 %H時%M分") %></div>
-
-        </th>
-      </div>
+      <% end %>
+      <% if post.api_type == 'twitter' %>
+          <div class="timeline-twitter">
+            <div class="post-image">
+              <th>
+                <%= image_tag post.image %>
+              </th>
+            </div>
+            <div class="smmary">
+              <div class="post-time pull-right"><%= post.post_time.strftime("%Y年%m月%d日 %H時%M分") %></div>
+              <br>
+              <div class="post-text"><th><%= auto_link((post.text).chomp) %></th></div>
+              <div class="post-text"><th><%= auto_link((post.key  ).chomp) %></th></div>
+              <th>
+                <br>
+                <span class="post-fav pull-right" id="tweet_<%= post.id %>">
+                  <%= render 'favorites/favorite_btn', post: post %>
+                </span>
+              </th>
+            </div>
+          </div>
+      <% end %>
   <% end %>
 </article>
 

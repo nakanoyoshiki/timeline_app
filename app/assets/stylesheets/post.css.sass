@@ -7,18 +7,39 @@ body
   max-width: $max-width
   margin: 0 auto
 #timeline
-  .timeline-cell
+  .timeline-gnavi
     margin: 0 0 10px 0
     background-color: $background-color
-  .post-image
-    img
-      margin: 0 auto
-      width: 100%
-      display: block
-  .post-text
-    padding: 10px
-  .post-time
-    padding: 0 1% 0 0
+    .post-image
+      img
+        margin: 0 auto
+        width: 100%
+        display: block
+    .post-text
+      padding: 10px
+    .post-time
+      padding: 0 1% 0 0
+  .timeline-twitter
+    margin: 0 0 10px 0
+    background-color: $background-color
+    overflow: hidden
+    .post-image
+      float: left
+      margin-right: 10px
+      img
+        width: 140px
+        display: block
+    .smmary
+      padding: 0 10px 10px 10px
+      height: 140px
+      .post-text
+        display: inline
+        vertical-align: middle
+        font-size: 13px
+      .post-time
+
+      .post-fav
+
 @media screen and ($max-width)
   .container
     width: 100%
