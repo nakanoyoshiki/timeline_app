@@ -28,7 +28,6 @@
               <div class="post-time pull-right"><%= post.post_time.strftime("%Y年%m月%d日 %H時%M分") %></div>
               <br>
               <div class="post-text"><th><%= auto_link((post.text).chomp) %></th></div>
-              <div class="post-text"><th><%= auto_link((post.key  ).chomp) %></th></div>
               <th>
                 <br>
                 <span class="post-fav pull-right" id="tweet_<%= post.id %>">

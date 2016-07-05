@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   def index
     create_from_gnavi
-    @posts = Post.order('post_time desc').limit(100)
+    @posts = Post.order('post_time desc').limit(70)
   end
 
   def update
@@ -18,7 +18,7 @@ class PostsController < ApplicationController
     rescue => e
     logger.error e.message
     flash[:error] = "エラーが起きました[#{e.message}]"
-    redirect_to root_path
+    # redirect_to root_path
   end
 
   def create_from_twitter tweet

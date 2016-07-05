@@ -1,1 +1,1 @@
-# timeline_app
+# timeline_app# ぐるなびAPIとTwitterAPIを使用。# ぐるばびで美味しいと投稿された情報とTwitterで鳥貴族（好きな店）と投稿された情報のタイムライン
