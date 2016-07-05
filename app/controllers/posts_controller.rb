@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   def index
+    create_from_gnavi
     @posts = Post.order('post_time desc').limit(100)
   end
 
