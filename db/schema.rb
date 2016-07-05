@@ -23,11 +23,11 @@ ActiveRecord::Schema.define(version: 20160702100620) do
   create_table "posts", force: :cascade do |t|
     t.string   "text"
     t.string   "image"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "api_type"
     t.datetime "post_time"
     t.string   "key"
-    t.string   "api_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
